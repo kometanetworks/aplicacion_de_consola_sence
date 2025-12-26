@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tarea Módulo 3 - JS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #console-output {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Consolas', monospace;
+            padding: 15px;
+            height: 400px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+        }
+
+        .log {
+            margin-bottom: 5px;
+            border-bottom: 1px solid #111;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Sistema de Gestión de Productos</h1>
+
+        <div class="controls">
+            <button onclick="iniciarSistema()">Iniciar Programa</button>
+            <button onclick="console.clear()" style="background-color: #666;">Limpiar</button>
+        </div>
+
+        <div id="console-output">
+            <div>> Esperando inicio...</div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Simulador simple de consola
+        const realLog = console.log;
+        const realClear = console.clear;
+        const output = document.getElementById('console-output');
+
+        console.log = function (...args) {
+            realLog.apply(console, args);
+            // Mostrar en el div
+            let text = args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' ');
+            let div = document.createElement('div');
+            div.className = 'log';
+            div.textContent = "> " + text;
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
+        };
+
+        console.clear = function () {
+            realClear.apply(console);
+            output.innerHTML = '<div>> Consola limpia</div>';
+        }
+    </script>
+</body>
+
+</html>
